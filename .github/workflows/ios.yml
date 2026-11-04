@@ -1,7 +1,7 @@
 name: iOS
 on:
   push:
-    branches: [main, skills/auto-swift]
+    branches: [main]
   pull_request:
   workflow_dispatch:
 permissions:
@@ -17,6 +17,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run package XCTest suite
         run: swift test --jobs 2
+      - name: Read public feed and verify offline relaunch
+        env:
+          FEED_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: swift run --jobs 2 LifeOSDemoCheck "https://raw.githubusercontent.com/jackaI1/lifeos-ios/$FEED_COMMIT/demo-api/today.json"
       - name: Install XcodeGen
         run: brew install xcodegen
       - name: Run iOS XCTest and build the app
@@ -26,4 +30,10 @@ jobs:
         with:
           name: ios-test-results
           path: TestResults.xcresult
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: companion-screen
+          path: Companion.png
           if-no-files-found: ignore

@@ -60,7 +60,11 @@ public final class CompanionStore {
                 status = .notSaved
             }
         } catch {
-            status = snapshot == nil ? .unavailable : .offline
+            if snapshot == nil {
+                status = .unavailable
+            } else if status != .notSaved {
+                status = .offline
+            }
         }
     }
 }

@@ -36,6 +36,14 @@ With full Xcode selected, I run the shared XCTest unit tests, which check small 
 swift test --jobs 2
 ```
 
-I can run the iOS tests and simulator build with `scripts/ci-ios.sh`. That script creates and removes its own simulator. GitHub Actions runs both sets of checks on a macOS runner for every pull request and merge. It also saves the iOS test results as a downloadable artifact.
+I can run the iOS tests and simulator build with `scripts/ci-ios.sh`. That script creates and removes its own simulator. GitHub Actions runs both sets of checks on a macOS runner for every pull request and merge. It also launches the app and saves a screen image and iOS test results as downloadable artifacts.
+
+I can also check the real public feed and an offline reopen from the terminal:
+
+```sh
+swift run LifeOSDemoCheck
+```
+
+This downloads the same feed as the app, saves it in a temporary folder, reopens it with the network disabled in code, checks that the data matches, and removes the temporary folder.
 
 This version is read-only. It has no notifications, personal workspace connection or App Store release.

@@ -21,3 +21,8 @@ xcodebuild -project LifeOSCompanion.xcodeproj -scheme LifeOSCompanion \
 xcodebuild -project LifeOSCompanion.xcodeproj -scheme LifeOSCompanion \
   -destination 'generic/platform=iOS Simulator' -derivedDataPath DerivedData \
   CODE_SIGNING_ALLOWED=NO build
+# Launch the actual app as well as testing its core. Keep a reviewable screen image.
+xcrun simctl install "$simulator" DerivedData/Build/Products/Debug-iphonesimulator/LifeOSCompanion.app
+xcrun simctl launch "$simulator" ca.jacklai.lifeos.companion
+sleep 8
+xcrun simctl io "$simulator" screenshot Companion.png

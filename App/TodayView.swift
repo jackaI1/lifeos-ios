@@ -145,7 +145,7 @@ struct TodayView: View {
         case .live: "Demo updated and saved on this phone"
         case .offline: "Could not refresh. Showing the saved copy."
         case .unavailable: "Could not download. Check your connection and retry."
-        case .notSaved: "Demo updated, but could not save it for offline use."
+        case .notSaved: "This copy could not be saved for offline use. Refresh to retry."
         }
     }
 }

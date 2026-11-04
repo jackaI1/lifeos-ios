@@ -1,5 +1,7 @@
 import Foundation
 import XCTest
+
+@MainActor private final class RequestState { var fails = false }
 @testable import LifeOSCore
 
 @MainActor
@@ -97,6 +99,25 @@ final class CompanionStoreTests: XCTestCase {
         _ = await (first, second)
         XCTAssertEqual(requests, 1)
         XCTAssertEqual(store.status, .live)
+    }
+
+    func testFailedRefreshDoesNotHidePersistenceFailure() async throws {
+        let parentFile = try directory().appendingPathComponent("file")
+        try Data().write(to: parentFile)
+        let data = try fixture()
+        let state = RequestState()
+        let store = CompanionStore(cache: SnapshotCache(url: parentFile.appendingPathComponent("cache.json")),
+                                   transport: { _ in
+            if state.fails { throw URLError(.notConnectedToInternet) }
+            return data
+        })
+        await store.refresh()
+        XCTAssertEqual(store.status, .notSaved)
+        let displayed = store.snapshot
+        state.fails = true
+        await store.refresh()
+        XCTAssertEqual(store.status, .notSaved)
+        XCTAssertEqual(store.snapshot, displayed)
     }
 
     func testCacheCreatesParentAndReplacesPreviousSnapshot() throws {
