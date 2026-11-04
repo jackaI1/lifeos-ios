@@ -2,6 +2,11 @@
 
 ## Public API
 
+I chose a separate public demonstration feed because the LifeOS browser demo
+runs its routes inside a browser worker. Those routes are not a remote schedule
+API. I can test the phone view and its saved copy without connecting private
+LifeOS data or implying that browser edits synchronize with this app.
+
 `demo-api/today.json` is the public companion demo API. It is served over HTTPS by GitHub's raw file host at the URL in `DemoHTTP.endpoint`. It requires no token and accepts only reads. This is a separately published companion feed, not the browser demo's internal routes or a private LifeOS endpoint.
 
 Version 1 has `schemaVersion`, an IANA `timeZone`, `schedule` and `deadlines`. Events contain an ID, title, location, day offset, start and end in 24-hour HH:mm format. Deadlines contain an ID, title, course, day offset, due time and completion state. Offsets are calendar days relative to the day a successful response is processed in the feed timezone. They allow a static public demonstration to remain useful on any day. All content is invented. `Tests/LifeOSCoreTests/Fixtures/today.json` mirrors the published response for deterministic testing.
