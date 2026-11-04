@@ -34,17 +34,18 @@ final class CompanionStoreTests: XCTestCase {
 
     func testFirstOfflineLaunchCanRecoverByRetrying() async throws {
         let cache = SnapshotCache(url: try directory().appendingPathComponent("cache.json"))
-        var fails = true
+        let state = RequestState()
+        state.fails = true
         let data = try fixture()
         let store = CompanionStore(cache: cache, transport: { _ in
-            if fails { throw URLError(.notConnectedToInternet) }
+            if state.fails { throw URLError(.notConnectedToInternet) }
             return data
         })
         store.restore()
         await store.refresh()
         XCTAssertNil(store.snapshot)
         XCTAssertEqual(store.status, .unavailable)
-        fails = false
+        state.fails = false
         await store.refresh()
         XCTAssertNotNil(store.snapshot)
         XCTAssertEqual(store.status, .live)

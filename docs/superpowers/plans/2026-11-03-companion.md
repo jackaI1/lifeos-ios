@@ -23,17 +23,23 @@ iOS 17+, fictional public data only, no private connections, no secrets. Preserv
 
 Files: Package.swift, Sources/LifeOSCore/{DemoFeed,SnapshotCache,CompanionStore}.swift, Tests/LifeOSCoreTests/*, demo-api/today.json.
 Interfaces: DemoFeed.snapshot(at:) -> Snapshot; Snapshot.events(on:), pendingDeadlines; SnapshotCache.read/write; CompanionStore.restore/refresh.
-- [ ] Write XCTest examples for resolution, filtering, validation, real disk roundtrip, HTTP errors, cache fallback and recovery.
-- [ ] Run swift test and observe missing implementation failures.
-- [ ] Implement the core with injected network transport and clock, preserving dated snapshots and serial refresh.
-- [ ] Run the full swift test suite and commit.
+- [x] Write XCTest examples for resolution, filtering, validation, real disk roundtrip, HTTP errors, cache fallback and recovery.
+- [x] Run swift test and observe missing implementation failures.
+- [x] Implement the core with injected network transport and clock, preserving dated snapshots and serial refresh.
+- [x] Run the full swift test suite and commit.
 
 ### Task 2: Native app and macOS build
 
 Files: App/*, project.yml, .github/workflows/ios.yml, scripts/ci-ios.sh, README.md, docs/design.md.
 Interfaces: the app imports LifeOSCore and observes CompanionStore. CI compiles the same source and XCTest files as iOS framework and test targets.
-- [ ] Build a native Today screen with schedule, deadlines, refresh, source and offline status.
-- [ ] Add XcodeGen configuration, simulator XCTest and unsigned build CI.
-- [ ] Document how to use and test it, API limitations and dated-cache behavior.
-- [ ] Run local package tests and generated project validation, then request whole-branch review.
-- [ ] Fix material findings, push branch, create PR, watch CI, rebase if needed, squash merge, watch main CI and run independent Sol verification until PASS.
+- [x] Build a native Today screen with schedule, deadlines, refresh, source and offline status.
+- [x] Add XcodeGen configuration, simulator XCTest and unsigned build CI.
+- [x] Document how to use and test it, API limitations and dated-cache behavior.
+- [x] Run local package tests and generated project validation, then request whole-branch review.
+- [x] Fix material findings and push a reviewable PR.
+
+Delivery gate: watch the final CI run, rebase if needed, squash merge, watch main CI and run independent Sol verification until PASS.
+
+## Review record
+
+An independent whole-branch review found one material issue: a later network failure could hide the warning that a downloaded copy was not saved. A standalone Swift regression reproduced the wrong offline status, then passed after preserving the warning. `testFailedRefreshDoesNotHidePersistenceFailure` covers the same transition in XCTest. No other blocking findings were reported. The first complete CI run passed all 15 original XCTest cases on macOS and iOS and built the app; the final suite adds that regression.

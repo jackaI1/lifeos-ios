@@ -8,7 +8,7 @@ I built a phone companion for LifeOS because I wanted to check my next class and
 
 This is my personal project. The app starts with fictional examples from a [public demo feed](https://raw.githubusercontent.com/jackaI1/lifeos-ios/main/demo-api/today.json), with no account or private records. I can tap **Refresh** or pull down the list to download again. The screen tells me when it was last updated and when it is showing a saved copy.
 
-The feed is a small, read-only JSON endpoint hosted in this repository. LifeOS's [browser demo](https://lifeos.jacklai.ca) keeps its data inside the browser, so this companion uses a separate demo feed. Browser edits do not sync to the phone. Each download places the examples around the current day in Toronto; offline copies keep their original dates, and old copies are labelled.
+The feed is a small text file hosted in this repository that the app can read over the internet. LifeOS's [browser demo](https://lifeos.jacklai.ca) keeps its data inside the browser, so this companion uses a separate demo feed. Browser edits do not sync to the phone. Each download places the examples around the current day in Toronto; offline copies keep their original dates, and old copies are labelled.
 
 ## Run it
 
