@@ -2,7 +2,7 @@ I merged this into my existing [lifeos-open project](https://github.com/jackaI1/
 
 The move keeps the original layout, including `scripts/ci-ios.sh`. I replaced the README with the report below and left out Git history, installed dependencies, caches and generated build output from the hub copy.
 
-The 3 test source files moved with the code. No project-specific GitHub Actions workflow was retained; the report records the omitted checks, and the test sources can be run locally from the linked folder.
+The 3 files of test code and supporting test helpers moved with the code. No project-specific GitHub Actions workflow was retained; the report records the omitted checks, and the test sources can be run locally from the linked folder.
 
 Omitted workflows: `lifeos-ios-ios.yml`: The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
 
