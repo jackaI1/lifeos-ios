@@ -1,6 +1,16 @@
-# LifeOS iOS
+I merged this into my existing [lifeos-open project](https://github.com/jackaI1/lifeos-open/tree/main/projects/lifeos-ios). The current code is in `projects/lifeos-ios/` there. I kept the code here so older links still work.
 
-A phone companion for today's schedule and upcoming deadlines.
+The move keeps the original layout, including `scripts/ci-ios.sh`. I replaced the README with the report below and left out Git history, installed dependencies, caches and generated build output from the hub copy.
+
+The 3 test source files moved with the code. No project-specific GitHub Actions workflow was retained; the report records the omitted checks, and the test sources can be run locally from the linked folder.
+
+Omitted workflows: `lifeos-ios-ios.yml`: The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
+
+---
+
+# lifeos-ios
+
+I built this to explore lifeos ios. This is a learning project.
 
 ## Overview
 
@@ -28,22 +38,12 @@ I used SwiftUI, Apple's interface framework, for the phone screen. The shared Sw
 
 I keep the network and storage code separate from the screen so I can test offline behavior without turning off the network. The [design notes](docs/design.md) explain the feed, cache and date handling in more detail.
 
-## Checks
+## Tests and limits
 
-With full Xcode selected, I run the shared XCTest unit tests, which check small pieces of behavior:
+I kept 3 files of test code and supporting test helpers in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
-```sh
-swift test --jobs 2
-```
 
-I can run the iOS tests and simulator build with `scripts/ci-ios.sh`. That script creates and removes its own simulator. GitHub Actions runs both sets of checks on a macOS runner for every pull request and merge. It also launches the app and saves a screen image and iOS test results as downloadable artifacts.
 
-I can also check the real public feed and an offline reopen from the terminal:
+The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
 
-```sh
-swift run LifeOSDemoCheck
-```
-
-This downloads the same feed as the app, saves it in a temporary folder, reopens it with the network disabled in code, checks that the data matches, and removes the temporary folder.
-
-This version is read-only. It has no notifications, personal workspace connection or App Store release.
+No project-specific GitHub Actions workflow was retained. The local test sources remain in this folder.
